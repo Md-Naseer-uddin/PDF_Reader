@@ -17,7 +17,7 @@ const dummyPDFs = [
     id: '1',
     title: 'Sample PDF',
     size: '2.5 MB',
-    pages: 2,
+    pages: 4,
     uri: "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf"
   },
   {
@@ -58,7 +58,7 @@ const dummyPDFs = [
 
 export default function Home({navigation}) {
   const openPDF = item => {
-    navigation.navigate('ViewScreen', {url: item.uri});
+    navigation.navigate('ViewScreen', {url: item.uri,pages: item.pages, title: item.title});
   };
 
   console.log('Started2');
