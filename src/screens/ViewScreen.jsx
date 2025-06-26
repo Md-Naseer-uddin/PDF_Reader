@@ -4,19 +4,27 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import Pdf from 'react-native-pdf';
-import {useRoute} from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-// const ViewScreen = () => {
-//   const route = useRoute();
-//   const {url, pages, title} = route.params;
+const ViewScreen = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { url, pages, title } = route.params;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(pages || 1);
-  const [isHorizontal, setIsHorizontal] = useState(true); // Default to horizontal
+  const [isHorizontal, setIsHorizontal] = useState(true);
 
   const pdfRef = useRef(null);
+
+  // Set the screen title
+  useLayoutEffect(() => {
+    if (title) {
+      navigation.setOptions({ title });
+    }
+  }, [navigation, title]);
 
   const toggleScrollDirection = () => {
     setIsHorizontal(prev => !prev);
@@ -27,9 +35,9 @@ import {useRoute} from '@react-navigation/native';
       <Pdf
         ref={pdfRef}
         trustAllCerts={false}
-        source={{uri: url}}
+        source={{ uri: url }}
         horizontal={isHorizontal}
-        enablePaging={isHorizontal} // enablePaging only works with horizontal mode
+        enablePaging={isHorizontal}
         onLoadComplete={(numberOfPages) => setTotalPages(numberOfPages)}
         onPageChanged={(page) => setCurrentPage(page)}
         onError={(error) => console.log('PDF load error:', error)}
@@ -37,7 +45,6 @@ import {useRoute} from '@react-navigation/native';
         style={styles.pdf}
       />
 
-      {/* Bottom bar with toggle and page info */}
       <View style={styles.bottomBar}>
         <TouchableOpacity style={styles.toggleButton} onPress={toggleScrollDirection}>
           <Text style={styles.toggleButtonText}>
@@ -52,7 +59,7 @@ import {useRoute} from '@react-navigation/native';
   );
 };
 
-// export default ViewScreen;
+export default ViewScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -82,5 +89,6 @@ const styles = StyleSheet.create({
   pageInfo: {
     fontWeight: 'bold',
     fontSize: 16,
+    color: '#333',
   },
 });

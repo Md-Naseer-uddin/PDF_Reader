@@ -16,6 +16,7 @@ const { width } = Dimensions.get('window');
 const GAP = 12;
 const CARD_WIDTH = Math.floor((width - GAP * 3) / 2);
 
+
 const dummyPDFs = [
   { id: '1', title: 'Sample PDF', size: '2.5 MB', pages: 4, uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf' },
   { id: '2', title: 'Dummy PDF', size: '1.5 MB', pages: 1, uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' },
@@ -47,7 +48,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>PDF Viewer</Text>
+      <Text style={styles.header}>Elearning</Text>
 
       <TextInput
         placeholder="Search PDF by name..."
